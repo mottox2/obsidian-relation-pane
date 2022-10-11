@@ -10,7 +10,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "isolatedModules": true,
-	"strictNullChecks": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "DocumentFragment",
+    "strictNullChecks": true,
     "lib": [
       "DOM",
       "ES5",
