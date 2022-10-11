@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
-	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"name": "obsidian-relation-pane",
+	"version": "0.0.1",
+	"description": "Obsidian (https://obsidian.md) plguin to summarize relations between notes",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
