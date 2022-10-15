@@ -27,6 +27,10 @@ const NewLinkIcon = () => {
   </span>
 }
 
+const extractExt = (name: string) => {
+  return name.replace(/.md$/, '')
+}
+
 export class RelationView extends ItemView {
   constructor(leaf: any) {
     super(leaf);
@@ -110,7 +114,7 @@ export class RelationView extends ItemView {
           links.map(link => {
             return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
               openLink(link)
-            }}><LinkIcon /> {link}</div>
+            }}><LinkIcon /> {extractExt(link)}</div>
           })
         }
         {
@@ -130,7 +134,7 @@ export class RelationView extends ItemView {
           backLinks.map(link => {
             return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
               openLink(link)
-            }}><LinkIcon /> {link}</div>
+            }}><LinkIcon /> {extractExt(link)}</div>
           })
         }
         {
@@ -155,7 +159,7 @@ export class RelationView extends ItemView {
               {links.map(link => {
                 return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
                   openLink(link)
-                }}><LinkIcon /> {link}</div>
+                }}><LinkIcon /> {extractExt(link)}</div>
               })}
             </div>
           </>
@@ -174,7 +178,7 @@ export class RelationView extends ItemView {
           newLinks.map(link => {
             return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
               openLink(link)
-            }}><NewLinkIcon /> {link}</div>
+            }}><NewLinkIcon /> {extractExt(link)}</div>
           })
         }
         {
