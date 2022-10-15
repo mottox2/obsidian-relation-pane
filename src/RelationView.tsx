@@ -41,10 +41,12 @@ export class RelationView extends ItemView {
   async onOpen() {
     this.render()
     this.app.workspace.on('file-open', this.render)
+    this.app.metadataCache.on('resolved', this.render)
   }
 
   async onClose() {
     this.app.workspace.off('file-open', this.render)
+    this.app.metadataCache.off('resolved', this.render)
   }
 
   private render() {
