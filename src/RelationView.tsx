@@ -1,5 +1,5 @@
 import { h } from 'dom-chef';
-import { ItemView, MarkdownView } from 'obsidian';
+import { ItemView } from 'obsidian';
 
 const getBackLinks = (resolvedLinks: Record<string, Record<string, number>>, filePath: string, ignorePath: string) => {
   const backLinks = []
@@ -7,7 +7,7 @@ const getBackLinks = (resolvedLinks: Record<string, Record<string, number>>, fil
     const links = resolvedLinks[src]
     for (const dest of Object.keys(links)) {
       if (dest === filePath && src !== ignorePath) {
-        console.log({ dest, src, ignorePath })
+        // console.log({ dest, src, ignorePath })
         backLinks.push(src)
       }
     }
@@ -52,11 +52,14 @@ export class RelationView extends ItemView {
     const container = this.containerEl.children[1];
     container.empty();
 
-    const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView)
-    console.log({ markdownView })
-    if (!markdownView) return
-    const file = markdownView.file
+    // const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView)
     // const fileCache = this.app.metadataCache.getFileCache(file)
+    // console.log({ markdownView })
+    const file = this.app.workspace.getActiveFile()
+    if (!file) {
+      console.log('file is not found')
+      return
+    }
 
     const resolvedLinks = this.app.metadataCache.resolvedLinks
     const links = Object.keys(resolvedLinks[file.path] || {})
