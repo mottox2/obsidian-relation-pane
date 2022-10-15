@@ -50,12 +50,11 @@ export class RelationView extends ItemView {
     console.log({ markdownView })
     if (!markdownView) return
     const file = markdownView.file
-    const fileCache = this.app.metadataCache.getFileCache(file)
-    const links = fileCache?.links || []
+    // const fileCache = this.app.metadataCache.getFileCache(file)
 
-
-    // getBackLinks
     const resolvedLinks = this.app.metadataCache.resolvedLinks
+    const links = Object.keys(resolvedLinks[file.path] || {})
+
     const backLinks = []
     for (const src of Object.keys(resolvedLinks)) {
       const links = resolvedLinks[src]
@@ -74,7 +73,7 @@ export class RelationView extends ItemView {
     let twoHopLinks: Record<string, string[]> = {}
     // get backLinks of fontLinks
     for (let page of frontLinks) {
-      console.log(page, getBackLinks(resolvedLinks, page, file.path))
+      // console.log(page, getBackLinks(resolvedLinks, page, file.path))
       twoHopLinks[page] = getBackLinks(resolvedLinks, page, file.path)
       // TODO: backlinksからこのページ自体を削除する
       // その結果、中身のないリストができるので、それを削除する
@@ -97,8 +96,8 @@ export class RelationView extends ItemView {
         {
           links.map(link => {
             return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
-              openLink(link.link)
-            }}><LinkIcon /> {link.link}</div>
+              openLink(link)
+            }}><LinkIcon /> {link}</div>
           })
         }
         {
