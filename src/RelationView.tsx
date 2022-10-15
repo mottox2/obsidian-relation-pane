@@ -21,6 +21,12 @@ const LinkIcon = () => {
   </span>
 }
 
+const NewLinkIcon = () => {
+  return <span className="tree-item-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="svg-icon lucide-file-plus"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+  </span>
+}
+
 export class RelationView extends ItemView {
   constructor(leaf: any) {
     super(leaf);
@@ -55,6 +61,8 @@ export class RelationView extends ItemView {
     const resolvedLinks = this.app.metadataCache.resolvedLinks
     const links = Object.keys(resolvedLinks[file.path] || {})
 
+    const unresolvedLinks = this.app.metadataCache.unresolvedLinks
+    const newLinks = Object.keys(unresolvedLinks[file.path] || {})
     const backLinks = []
     for (const src of Object.keys(resolvedLinks)) {
       const links = resolvedLinks[src]
@@ -148,6 +156,26 @@ export class RelationView extends ItemView {
           </>
         })
       }
+      <div className="tree-item-self">
+        <div className="tree-item-inner">New Links</div>
+        <div className="tree-item-flair-counter">
+          <div className='tree-item-flair'>
+            {newLinks.length}
+          </div>
+        </div>
+      </div>
+      <div className="search-result-container">
+        {
+          newLinks.map(link => {
+            return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
+              openLink(link)
+            }}><NewLinkIcon /> {link}</div>
+          })
+        }
+        {
+          newLinks.length === 0 && <div className="search-empty-state">No new links found.</div>
+        }
+      </div>
       {false && <div>
         <h3>Debugger</h3>
         <p>resolvedLinks</p>
