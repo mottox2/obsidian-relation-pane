@@ -6,9 +6,12 @@ const VIEW_TYPE = 'relation-view';
 export default class MyPlugin extends Plugin {
 	async onload() {
 		this.addCommand({
-			id: 'open-sample-panel',
-			name: 'Open relation panel',
-			callback: () => {
+			id: 'open-relation-panel',
+			name: 'Open relation view',
+			checkCallback: (checking) => {
+				if (checking) {
+					return this.app.workspace.getLeavesOfType(VIEW_TYPE).length === 0;
+				}
 				this.activateView();
 			}
 		});
@@ -17,12 +20,9 @@ export default class MyPlugin extends Plugin {
 			return new RelationView(leaf)
 		})
 
-		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (
-			evt: MouseEvent) => {
-			this.activateView()
-		});
-		// Perform additional things with the ribbon
-		ribbonIconEl.addClass('my-plugin-ribbon-class');
+		if (this.app.workspace.layoutReady) {
+			this.activateView();
+		}
 	}
 
 	onunload() {
