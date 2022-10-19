@@ -2,14 +2,14 @@
 
 Obsidian (https://obsidian.md) plguin to summarize relations between notes.
 
-TODO: Image
+![screenshot](./screenshot.png)
 
 This plugin showes note links for the following conditions:
 
-- 1. notes linked from this note
-- 2. notes linked to this note
-- 3. notes linked from this note included in 1.
-- 4. uncreated notes but not created linked from this notes
+1. notes linked from this note
+2. notes linked to this note
+3. notes linked from this note included in 1.
+4. uncreated notes but not created linked from this notes
 
 ## Usage
 
