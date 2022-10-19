@@ -1,7 +1,5 @@
 import { Plugin } from 'obsidian';
-import { RelationView } from "./src/RelationView"
-
-const VIEW_TYPE = 'relation-view';
+import { RelationView, VIEW_TYPE } from "./RelationView"
 
 export default class MyPlugin extends Plugin {
 	async onload() {

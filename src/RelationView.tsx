@@ -1,13 +1,14 @@
 import { h } from 'dom-chef';
 import { ItemView } from 'obsidian';
 
+export const VIEW_TYPE = 'relation-view'
+
 const getBackLinks = (resolvedLinks: Record<string, Record<string, number>>, filePath: string, ignorePath: string) => {
   const backLinks = []
   for (const src of Object.keys(resolvedLinks)) {
     const links = resolvedLinks[src]
     for (const dest of Object.keys(links)) {
       if (dest === filePath && src !== ignorePath) {
-        // console.log({ dest, src, ignorePath })
         backLinks.push(src)
       }
     }
@@ -37,10 +38,13 @@ export class RelationView extends ItemView {
     this.render = this.render.bind(this)
   }
   getViewType(): string {
-    return "relation-view"
+    return VIEW_TYPE
   }
   getDisplayText(): string {
     return "Relation View"
+  }
+  getIcon(): string {
+    return "link"
   }
   async onOpen() {
     this.render()
@@ -54,13 +58,9 @@ export class RelationView extends ItemView {
   }
 
   private render() {
-    console.log('render')
     const container = this.containerEl.children[1];
     container.empty();
 
-    // const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView)
-    // const fileCache = this.app.metadataCache.getFileCache(file)
-    // console.log({ markdownView })
     const file = this.app.workspace.getActiveFile()
     if (!file) {
       console.log('file is not found')
@@ -88,12 +88,9 @@ export class RelationView extends ItemView {
       frontLinks = Object.keys(resolvedLinks[file.path])
 
     let twoHopLinks: Record<string, string[]> = {}
-    // get backLinks of fontLinks
+    // get backLinks of frontLinks
     for (let page of frontLinks) {
-      // console.log(page, getBackLinks(resolvedLinks, page, file.path))
       twoHopLinks[page] = getBackLinks(resolvedLinks, page, file.path)
-      // TODO: backlinksからこのページ自体を削除する
-      // その結果、中身のないリストができるので、それを削除する
     }
 
     const openLink = (link: string, newTab: boolean = false) => {
