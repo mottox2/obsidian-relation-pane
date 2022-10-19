@@ -96,8 +96,9 @@ export class RelationView extends ItemView {
       // その結果、中身のないリストができるので、それを削除する
     }
 
-    const openLink = (link: string) => {
-      this.app.workspace.openLinkText(link, file.path)
+    const openLink = (link: string, newTab: boolean = false) => {
+      const newLeaf = newTab ? 'tab' : undefined
+      this.app.workspace.openLinkText(link, file.path, newLeaf)
     }
 
     const view = <div className='backlink-pane'>
@@ -112,8 +113,8 @@ export class RelationView extends ItemView {
       <div className="search-result-container">
         {
           links.map(link => {
-            return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
-              openLink(link)
+            return <div className='tree-item-self search-result-file-title is-clickable' onClick={(e) => {
+              openLink(link, e.metaKey)
             }}><LinkIcon /> {extractExt(link)}</div>
           })
         }
@@ -132,8 +133,8 @@ export class RelationView extends ItemView {
       <div className="search-result-container">
         {
           backLinks.map(link => {
-            return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
-              openLink(link)
+            return <div className='tree-item-self search-result-file-title is-clickable' onClick={(e) => {
+              openLink(link, e.metaKey)
             }}><LinkIcon /> {extractExt(link)}</div>
           })
         }
@@ -157,8 +158,8 @@ export class RelationView extends ItemView {
             </div>
             <div className="search-result-container">
               {links.map(link => {
-                return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
-                  openLink(link)
+                return <div className='tree-item-self search-result-file-title is-clickable' onClick={(e) => {
+                  openLink(link, e.metaKey)
                 }}><LinkIcon /> {extractExt(link)}</div>
               })}
             </div>
@@ -176,8 +177,8 @@ export class RelationView extends ItemView {
       <div className="search-result-container">
         {
           newLinks.map(link => {
-            return <div className='tree-item-self search-result-file-title is-clickable' onClick={() => {
-              openLink(link)
+            return <div className='tree-item-self search-result-file-title is-clickable' onClick={(e) => {
+              openLink(link, e.metaKey)
             }}><NewLinkIcon /> {extractExt(link)}</div>
           })
         }
