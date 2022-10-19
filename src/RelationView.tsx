@@ -82,15 +82,18 @@ export class RelationView extends ItemView {
       }
     }
 
+
     // getFrontLinks
-    let frontLinks: string[] = []
-    if (resolvedLinks[file.path])
-      frontLinks = Object.keys(resolvedLinks[file.path])
+    let frontLinks: string[] = Object.keys(resolvedLinks[file.path]) || []
+    let frontUnresolvedLinks: string[] = Object.keys(unresolvedLinks[file.path]) || []
 
     let twoHopLinks: Record<string, string[]> = {}
-    // get backLinks of frontLinks
+    // get second degree links
     for (let page of frontLinks) {
       twoHopLinks[page] = getBackLinks(resolvedLinks, page, file.path)
+    }
+    for (let page of frontUnresolvedLinks) {
+      twoHopLinks[page] = getBackLinks(unresolvedLinks, page, file.path)
     }
 
     const openLink = (link: string, newTab: boolean = false) => {
