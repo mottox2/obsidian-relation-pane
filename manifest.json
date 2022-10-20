@@ -2,8 +2,8 @@
 	"id": "obsidian-relation-pane",
 	"name": "Relation Pane",
 	"version": "0.0.1",
-	"minAppVersion": "0.15.0",
-	"description": "This plugin displays a panel that summarizes the links an article has.",
+	"minAppVersion": "1.0.0",
+	"description": "This plugin displays a panel that summarize relations between notes.",
 	"author": "mottox2",
 	"authorUrl": "https://mottox2.com",
 	"isDesktopOnly": false

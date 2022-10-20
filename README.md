@@ -19,4 +19,4 @@ This plugin outputs a list of related notes from the note links.
 
 ## Credit
 
-This plugin is inspired by [tokuhirom/obsidian-2hop-links-plugin](https://github.com/tokuhirom/obsidian-2hop-links-plugin).
+This plugin is inspired by [tokuhirom/obsidian-2hop-links-plugin](https://github.com/tokuhirom/obsidian-2hop-links-plugin) and [Scrapbox 2hop links](https://scrapbox.io/shokai/2_hop_link).
