@@ -6,7 +6,7 @@ export const VIEW_TYPE = "relation-view"
 const getBackLinks = (
   resolvedLinks: Record<string, Record<string, number>>,
   filePath: string,
-  ignorePath: string
+  ignorePath?: string
 ) => {
   const backLinks = []
   for (const src of Object.keys(resolvedLinks)) {
@@ -88,7 +88,7 @@ export class RelationView extends ItemView {
   }
 
   private render() {
-    const container = this.containerEl.children[1]
+    const container = this.contentEl
     container.empty()
 
     const file = this.app.workspace.getActiveFile()
@@ -102,15 +102,7 @@ export class RelationView extends ItemView {
 
     const unresolvedLinks = this.app.metadataCache.unresolvedLinks
     const newLinks = Object.keys(unresolvedLinks[file.path] || {})
-    const backLinks = []
-    for (const src of Object.keys(resolvedLinks)) {
-      const links = resolvedLinks[src]
-      for (const link of Object.keys(links)) {
-        if (link === file.path) {
-          backLinks.push(src)
-        }
-      }
-    }
+    const backLinks = getBackLinks(resolvedLinks, file.path)
 
     // getFrontLinks
     let frontLinks: string[] = Object.keys(resolvedLinks[file.path]) || []
