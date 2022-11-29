@@ -1,38 +1,25 @@
 <script lang="ts">
-  import { connections } from "src/store"
+  import store from "src/store"
   import LinkIcon from "./LinkIcon.svelte"
   import NewLinkIcon from "./NewLinkIcon.svelte"
 
-  export let openLink = (event: MouseEvent, link: string) => {}
-  let connectedNotes = {
-    noActiveFile: true,
-    links: [],
-    backLinks: [],
-    newLinks: [],
-  }
+  export let openLink: (event: MouseEvent, link: string) => void;
 
-  connections.subscribe((value) => {
-    if (Object.keys(value).length === 0) return
-    connectedNotes = value
-  })
-
-  const extractExt = (name: string) => {
-  return name.replace(/.md$/, "")
-}
+  const extractExt = (name: string) => name.replace(/.md$/, "")
 </script>
 
 <div class="backlink-pane">
-  {#if connectedNotes.noActiveFile}
+  {#if $store.noActiveFile}
     <div class="pane-empty">No active file.</div>
   {:else}
     <div class="tree-item-self">
       <div class="tree-item-inner">Links</div>
       <div class="tree-item-flair-counter">
-        <div class="tree-item-flair">{connectedNotes.links.length}</div>
+        <div class="tree-item-flair">{$store.links.length}</div>
       </div>
     </div>
     <div class="search-result-container">
-      {#each connectedNotes.links as link}
+      {#each $store.links as link}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
           class="tree-item-self search-result-file-title is-clickable"
@@ -42,18 +29,18 @@
           {extractExt(link)}
         </div>
       {/each}
-      {#if connectedNotes.links.length === 0}
+      {#if $store.links.length === 0}
         <div class="search-empty-state">No links found.</div>
       {/if}
     </div>
     <div class="tree-item-self">
       <div class="tree-item-inner">Backlinks</div>
       <div class="tree-item-flair-counter">
-        <div class="tree-item-flair">{connectedNotes.backLinks.length}</div>
+        <div class="tree-item-flair">{$store.backLinks.length}</div>
       </div>
     </div>
     <div class="search-result-container">
-      {#each connectedNotes.backLinks as link}
+      {#each $store.backLinks as link}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
           class="tree-item-self search-result-file-title is-clickable"
@@ -63,18 +50,18 @@
           {extractExt(link)}
         </div>
       {/each}
-      {#if connectedNotes.backLinks.length === 0}
+      {#if $store.backLinks.length === 0}
         <div class="search-empty-state">No back links found.</div>
       {/if}
     </div>
     <div class="tree-item-self">
       <div class="tree-item-inner">New Links</div>
       <div class="tree-item-flair-counter">
-        <div class="tree-item-flair">{connectedNotes.newLinks.length}</div>
+        <div class="tree-item-flair">{$store.newLinks.length}</div>
       </div>
     </div>
     <div class="search-result-container">
-      {#each connectedNotes.newLinks as link}
+      {#each $store.newLinks as link}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
           class="tree-item-self search-result-file-title is-clickable"
@@ -84,7 +71,7 @@
           {link}
         </div>
       {/each}
-      {#if connectedNotes.newLinks.length === 0}
+      {#if $store.newLinks.length === 0}
         <div class="search-empty-state">No new links found.</div>
       {/if}
     </div>
@@ -92,4 +79,7 @@
 </div>
 
 <style>
+  .tree-item-self {
+    align-items: center;
+  }
 </style>

@@ -1,5 +1,5 @@
 import { Plugin } from "obsidian"
-import { RelationView, VIEW_TYPE } from "./RelationView"
+import { RelationView, VIEW_TYPE } from "./view"
 
 export default class RelationPanePlugin extends Plugin {
   async onload() {

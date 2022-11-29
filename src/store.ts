@@ -1,4 +1,17 @@
 import { writable } from "svelte/store";
-// import type ExamplePlugin from "./main";
 
-export const connections = writable<any>({});
+type StoreValue = {
+  noActiveFile: boolean;
+  links: string[];
+  backLinks: string[];
+  newLinks: string[];
+}
+
+const store = writable<StoreValue>({
+  noActiveFile: true,
+  links: [],
+  backLinks: [],
+  newLinks: [],
+});
+
+export default store

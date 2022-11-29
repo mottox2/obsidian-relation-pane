@@ -1,6 +1,6 @@
 import { ItemView, Keymap } from "obsidian"
-import Component from "./ui/Component.svelte";
-import { connections } from "./store"
+import Pane from "./ui/Pane.svelte";
+import store from "./store"
 
 export const VIEW_TYPE = "relation-view"
 
@@ -22,7 +22,7 @@ const getBackLinks = (
 }
 
 export class RelationView extends ItemView {
-  component: Component
+  component: Pane
 
   constructor(leaf: any) {
     super(leaf)
@@ -38,11 +38,10 @@ export class RelationView extends ItemView {
     return "link"
   }
   async onOpen() {
-    this.component = new Component({
+    this.component = new Pane({
       target: this.contentEl,
       props: {
-        openLink: (e: PointerEvent, link: string) => {
-          console.log('openLink', link)
+        openLink: (e: MouseEvent, link: string) => {
           const file = this.app.workspace.getActiveFile()
           if (!file) return
           this.app.workspace.openLinkText(link, file.path, Keymap.isModEvent(e))
@@ -61,8 +60,7 @@ export class RelationView extends ItemView {
   private collect() {
     const file = this.app.workspace.getActiveFile()
     if (!file) {
-      console.log("no file")
-      connections.set({
+      store.set({
         noActiveFile: true,
         links: [],
         newLinks: [],
@@ -92,7 +90,7 @@ export class RelationView extends ItemView {
       twoHopLinks[page] = getBackLinks(unresolvedLinks, page, file.path)
     }
 
-    connections.set({
+    store.set({
       noActiveFile: false,
       links,
       newLinks,
