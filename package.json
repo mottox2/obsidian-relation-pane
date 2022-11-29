@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-relation-pane",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Obsidian (https://obsidian.md) plguin to summarize relations between notes",
 	"main": "main.js",
 	"scripts": {
