@@ -65,6 +65,7 @@ export class RelationView extends ItemView {
         links: [],
         newLinks: [],
         backLinks: [],
+        twoHopLinks: {},
       })
       return
     }
@@ -95,6 +96,7 @@ export class RelationView extends ItemView {
       links,
       newLinks,
       backLinks,
+      twoHopLinks,
     })
   }
 }

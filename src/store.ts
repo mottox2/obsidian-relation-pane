@@ -5,6 +5,7 @@ type StoreValue = {
   links: string[];
   backLinks: string[];
   newLinks: string[];
+  twoHopLinks: Record<string, string[]>
 }
 
 const store = writable<StoreValue>({
@@ -12,6 +13,7 @@ const store = writable<StoreValue>({
   links: [],
   backLinks: [],
   newLinks: [],
+  twoHopLinks: {},
 });
 
 export default store

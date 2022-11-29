@@ -3,7 +3,7 @@
   import LinkIcon from "./LinkIcon.svelte"
   import NewLinkIcon from "./NewLinkIcon.svelte"
 
-  export let openLink: (event: MouseEvent, link: string) => void;
+  export let openLink: (event: MouseEvent, link: string) => void
 
   const extractExt = (name: string) => name.replace(/.md$/, "")
 </script>
@@ -54,6 +54,30 @@
         <div class="search-empty-state">No back links found.</div>
       {/if}
     </div>
+    {#each Object.keys($store.twoHopLinks) as file}
+      {@const links = $store.twoHopLinks[file]}
+      {#if links.length > 0}
+        {@const title = file.replace(/.md$/, "") || ""}
+        <div class="tree-item-self">
+          <div class="tree-item-inner">{title}</div>
+          <div class="tree-item-flair-counter">
+            <div class="tree-item-flair">{links.length}</div>
+          </div>
+        </div>
+        <div class="search-result-container">
+          {#each links as link}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div
+              class="tree-item-self search-result-file-title is-clickable"
+              on:click={(e) => openLink(e, link)}
+            >
+              <LinkIcon />
+              {extractExt(link)}
+            </div>
+          {/each}
+        </div>
+      {/if}
+    {/each}
     <div class="tree-item-self">
       <div class="tree-item-inner">New Links</div>
       <div class="tree-item-flair-counter">
