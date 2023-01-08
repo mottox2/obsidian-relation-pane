@@ -5,9 +5,9 @@
   import type { Settings } from "../settings"
 
   export let openLink: (event: MouseEvent, link: string) => void
-  export let getSettings: () => Settings
+  export let settings: Settings
 
-  const { experimentalHideFolderPath } = getSettings();
+  const { experimentalHideFolderPath } = settings;
 
   const extractFolderName = (path: string) => {
     if (!experimentalHideFolderPath) return path

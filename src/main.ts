@@ -27,7 +27,7 @@ export default class RelationPanePlugin extends Plugin {
     })
 
     this.registerView(VIEW_TYPE, (leaf) => {
-      return new RelationView(leaf, this)
+      return new RelationView(leaf, () => this.settings)
     })
 
     await this.loadSettings()

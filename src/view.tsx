@@ -1,7 +1,7 @@
-import { ItemView, Keymap } from "obsidian"
+import { ItemView, Keymap, WorkspaceLeaf } from "obsidian"
 import Pane from "./ui/Pane.svelte";
 import store from "./store"
-import type RelationPanePlugin from "./main"
+import type { Settings } from "./settings"
 
 export const VIEW_TYPE = "relation-view"
 
@@ -25,7 +25,7 @@ const getBackLinks = (
 export class RelationView extends ItemView {
   component: Pane
 
-  constructor(leaf: any, private plugin: RelationPanePlugin) {
+  constructor(leaf: WorkspaceLeaf, private getSettings: () => Settings) {
     super(leaf)
     this.collect = this.collect.bind(this)
   }
@@ -61,7 +61,7 @@ export class RelationView extends ItemView {
           if (!file) return
           this.app.workspace.openLinkText(link, file.path, Keymap.isModEvent(e))
         },
-        getSettings: () => this.plugin.settings,
+        settings: this.getSettings(),
       }
     });
     this.collect();
