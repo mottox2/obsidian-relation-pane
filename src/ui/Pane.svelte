@@ -2,10 +2,23 @@
   import store from "src/store"
   import LinkIcon from "./LinkIcon.svelte"
   import NewLinkIcon from "./NewLinkIcon.svelte"
+  import type { Settings } from "../settings"
 
   export let openLink: (event: MouseEvent, link: string) => void
+  export let getSettings: () => Settings
 
-  const extractExt = (name: string) => name.replace(/.md$/, "")
+  const { experimentalHideFolderPath } = getSettings();
+
+  const extractFolderName = (path: string) => {
+    if (!experimentalHideFolderPath) return path
+    const parts = path.split("/")
+    return parts[parts.length - 1]
+  }
+
+  const fileName = (path: string) => {
+    const name = path.replace(/.md$/, "")
+    return extractFolderName(name)
+  }
 </script>
 
 <div class="backlink-pane">
@@ -26,7 +39,7 @@
           on:click={(e) => openLink(e, link)}
         >
           <LinkIcon />
-          {extractExt(link)}
+          {fileName(link)}
         </div>
       {/each}
       {#if $store.links.length === 0}
@@ -47,7 +60,7 @@
           on:click={(e) => openLink(e, link)}
         >
           <LinkIcon />
-          {extractExt(link)}
+          {fileName(link)}
         </div>
       {/each}
       {#if $store.backLinks.length === 0}
@@ -57,9 +70,8 @@
     {#each Object.keys($store.twoHopLinks) as file}
       {@const links = $store.twoHopLinks[file]}
       {#if links.length > 0}
-        {@const title = file.replace(/.md$/, "") || ""}
         <div class="tree-item-self">
-          <div class="tree-item-inner">{title}</div>
+          <div class="tree-item-inner">{fileName(file)}</div>
           <div class="tree-item-flair-counter">
             <div class="tree-item-flair">{links.length}</div>
           </div>
@@ -72,7 +84,7 @@
               on:click={(e) => openLink(e, link)}
             >
               <LinkIcon />
-              {extractExt(link)}
+              {fileName(link)}
             </div>
           {/each}
         </div>
@@ -92,7 +104,7 @@
           on:click={(e) => openLink(e, link)}
         >
           <NewLinkIcon />
-          {link}
+          {fileName(link)}
         </div>
       {/each}
       {#if $store.newLinks.length === 0}

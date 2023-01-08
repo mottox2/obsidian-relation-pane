@@ -1,6 +1,7 @@
 import { ItemView, Keymap } from "obsidian"
 import Pane from "./ui/Pane.svelte";
 import store from "./store"
+import type RelationPanePlugin from "./main"
 
 export const VIEW_TYPE = "relation-view"
 
@@ -24,7 +25,7 @@ const getBackLinks = (
 export class RelationView extends ItemView {
   component: Pane
 
-  constructor(leaf: any) {
+  constructor(leaf: any, private plugin: RelationPanePlugin) {
     super(leaf)
     this.collect = this.collect.bind(this)
   }
@@ -37,18 +38,12 @@ export class RelationView extends ItemView {
   getIcon(): string {
     return "link"
   }
+  refresh() {
+    this.component.$destroy();
+    this.render();
+  }
   async onOpen() {
-    this.component = new Pane({
-      target: this.contentEl,
-      props: {
-        openLink: (e: MouseEvent, link: string) => {
-          const file = this.app.workspace.getActiveFile()
-          if (!file) return
-          this.app.workspace.openLinkText(link, file.path, Keymap.isModEvent(e))
-        }
-      }
-    });
-    this.collect();
+    this.render();
     this.app.workspace.on("file-open", this.collect)
     this.app.metadataCache.on("resolved", this.collect)
   }
@@ -56,6 +51,20 @@ export class RelationView extends ItemView {
     this.component.$destroy();
     this.app.workspace.off("file-open", this.collect)
     this.app.metadataCache.off("resolved", this.collect)
+  }
+  private render() {
+    this.component = new Pane({
+      target: this.contentEl,
+      props: {
+        openLink: (e: MouseEvent, link: string) => {
+          const file = this.app.workspace.getActiveFile()
+          if (!file) return
+          this.app.workspace.openLinkText(link, file.path, Keymap.isModEvent(e))
+        },
+        getSettings: () => this.plugin.settings,
+      }
+    });
+    this.collect();
   }
   private collect() {
     const file = this.app.workspace.getActiveFile()
