@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-relation-pane",
 	"name": "Relation Pane",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"minAppVersion": "1.0.0",
 	"description": "This plugin displays a panel that summarize relations between notes.",
 	"author": "mottox2",

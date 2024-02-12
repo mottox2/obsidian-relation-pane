@@ -27,7 +27,7 @@
   {:else}
     <div class="tree-item-self">
       <div class="tree-item-inner">Links</div>
-      <div class="tree-item-flair-counter">
+      <div class="tree-item-flair-outer">
         <div class="tree-item-flair">{$store.links.length}</div>
       </div>
     </div>
@@ -48,7 +48,7 @@
     </div>
     <div class="tree-item-self">
       <div class="tree-item-inner">Backlinks</div>
-      <div class="tree-item-flair-counter">
+      <div class="tree-item-flair-outer">
         <div class="tree-item-flair">{$store.backLinks.length}</div>
       </div>
     </div>
@@ -72,7 +72,7 @@
       {#if links.length > 0}
         <div class="tree-item-self">
           <div class="tree-item-inner">{fileName(file)}</div>
-          <div class="tree-item-flair-counter">
+          <div class="tree-item-flair-outer">
             <div class="tree-item-flair">{links.length}</div>
           </div>
         </div>
@@ -92,7 +92,7 @@
     {/each}
     <div class="tree-item-self">
       <div class="tree-item-inner">New Links</div>
-      <div class="tree-item-flair-counter">
+      <div class="tree-item-flair-outer">
         <div class="tree-item-flair">{$store.newLinks.length}</div>
       </div>
     </div>
@@ -113,9 +113,3 @@
     </div>
   {/if}
 </div>
-
-<style>
-  .tree-item-self {
-    align-items: center;
-  }
-</style>
